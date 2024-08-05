@@ -123,6 +123,8 @@ jobs:
   release:
     name: Attach artifacts to release
     needs: [set-vars, build]
+    permissions:
+      contents: write
     env:
       ARTIFACT_NAME: "${{ needs.set-vars.outputs.ARTIFACT_NAME }}"
     runs-on: ${{ vars.RUNNER }}
