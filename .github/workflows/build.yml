@@ -22,6 +22,8 @@ jobs:
       ARTIFACT_NAME: "${{ github.event.repository.name }}-${{ steps.vars.outputs.V }}"
     steps:
     - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
     - name: default version
       id: default_version
       run: |
