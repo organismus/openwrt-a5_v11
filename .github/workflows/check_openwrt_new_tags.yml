@@ -28,8 +28,8 @@ jobs:
   update-readme:
     name: Update README.md
     needs: [get-openwrt-version]
-    permissions:
-      contents: write
+#    permissions:
+#      contents: write
     if: needs.get-openwrt-version.outputs.is_in_readme == '0'
     uses: ./.github/workflows/update_readme.yml
     secrets: inherit
@@ -38,8 +38,8 @@ jobs:
   push-git-tag:
     runs-on: ${{ vars.RUNNER }}
     needs: [get-openwrt-version, update-readme]
-#    permissions:
-#      contents: write
+    permissions:
+      contents: write
     if: needs.get-openwrt-version.outputs.is_in_readme == '0'
     steps:
       - name: Push new tag
