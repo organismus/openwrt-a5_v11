@@ -1,0 +1,20 @@
+name: Create and push tag
+
+inputs:
+  tag:
+    description: 'tag name, for example: v.1.0.0'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+      - run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag ${{ inputs.tag }}
+          git push origin ${{ inputs.tag }}
