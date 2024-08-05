@@ -186,5 +186,5 @@ jobs:
       - uses: softprops/action-gh-release@master
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ${{ env.ARTIFACTS_TEMP_DIR }}/*
+          files: ${{ env.ARTIFACTS_TEMP_DIR }}/
           draft: false
