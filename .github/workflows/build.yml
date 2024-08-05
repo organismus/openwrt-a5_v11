@@ -1,6 +1,7 @@
 name: Build firmware for A5-V11
 
 on:
+  workflow_call:
   push:
     tags:
     - 'v*'
