@@ -2,8 +2,8 @@
 name: Check OpenWRT for new releases
 
 on:
-  schedule:
-    - cron:  '*/5 * * * *'
+#  schedule:
+#    - cron:  '*/5 * * * *'
 
   # Allow running this workflow manually
   workflow_dispatch:
