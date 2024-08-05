@@ -40,9 +40,9 @@ jobs:
     needs: [get-openwrt-version, update-readme]
     env:
       version: ${{ needs.get-openwrt-version.outputs.version }}
-    if: needs.get-openwrt-version.outputs.is_in_readme == '0'
     permissions:
       contents: write
+#    if: needs.get-openwrt-version.outputs.is_in_readme == '0'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -63,7 +63,7 @@ jobs:
       attestations: write
       packages: write
       id-token: write
-    if: needs.get-openwrt-version.outputs.is_in_readme == '0'
+#    if: needs.get-openwrt-version.outputs.is_in_readme == '0'
     uses: ./.github/workflows/build.yml
     secrets: inherit
 
