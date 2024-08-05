@@ -42,10 +42,10 @@ jobs:
     if: needs.get-openwrt-version.outputs.is_in_readme == '0'
     steps:
       - run: |
-        git config user.name "GitHub Actions"
-        git config user.email "github-actions@users.noreply.github.com"
-        git tag ${{ env.version }}
-        git push origin ${{ env.version }}
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git tag ${{ env.version }}
+          git push origin ${{ env.version }}
 
       - name: Create Release
         uses: actions/create-release@v1
