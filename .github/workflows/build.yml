@@ -152,7 +152,7 @@ jobs:
         run: echo Release existence result "$RE"
         shell: bash
         env:
-        RE: ${{ steps.release-exists.outputs.release-exists }}
+          RE: ${{ steps.release-exists.outputs.release-exists }}
 
 #      - name: Create Release
 #        id: create_release
