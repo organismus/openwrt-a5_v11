@@ -97,9 +97,7 @@ jobs:
         context: .
         file: Dockerfile.test
         tags: ${{ steps.meta.outputs.tags }}
-#        tags: ghcr.io/b0rder/openwrt-a5-v11-${{env.V}}:latest
         push: true
-#        tags: openwrt-builder:${{env.V}}
         labels: ${{ steps.meta.outputs.labels }}
         provenance: false
         sbom: false
@@ -180,6 +178,7 @@ jobs:
 #          asset_content_type: application/zip
 ###### FAKE ZIP ######
 
+      - run: ls -la ${{ env.ARTIFACTS_TEMP_DIR }}/
       - uses: actions/download-artifact@master
         with:
           name: ${{ env.ARTIFACT_NAME }}
