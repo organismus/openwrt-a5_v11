@@ -41,7 +41,7 @@ jobs:
       version: ${{ needs.get-openwrt-version.outputs.version }}
     if: needs.get-openwrt-version.outputs.is_in_readme == '0'
     steps:
-     - name: Checkout repo
+      - name: Checkout repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
