@@ -12,13 +12,13 @@ on:
 jobs:
   update_readme:
     runs-on: ubuntu-latest
-#    permissions:
-#      contents: write
+    permissions:
+      contents: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          persist-credentials: true
+#          persist-credentials: true
           # Otherwise, there would be errors pushing refs to the destination repository
           fetch-depth: 0
           ref: ${{ github.head_ref }}
@@ -37,7 +37,3 @@ jobs:
           git diff-index --quiet HEAD || git commit -m "Autocommit: updated at $(date -u)"
           git push --verbose
 
-#      - name: Push changes
-#        uses: ad-m/github-push-action@master
-#        with:
-#          force_with_lease: true
