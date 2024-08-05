@@ -1,4 +1,4 @@
-name: When release created, trigger build on tag
+name: Build on Release
 
 on:
   release:
