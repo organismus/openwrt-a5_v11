@@ -183,6 +183,7 @@ jobs:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ env.ARTIFACTS_TEMP_DIR }}/
       - run: |
+          rm -rf /tmp/123
           mkdir /tmp/123
           echo test >/tmp/123/hello.txt
           cd /tmp/123
