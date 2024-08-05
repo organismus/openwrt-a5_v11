@@ -1,5 +1,5 @@
-# Check OpenWRT repository for new tags created and initiate new build if found.
-name: Check OpenWRT new tags
+# Check OpenWRT repository for new releases and then create new tag if found
+name: Check OpenWRT for new releases
 
 on:
   schedule:
@@ -34,9 +34,11 @@ jobs:
     uses: ./.github/workflows/update_readme.yml
     secrets: inherit
 
-  create-release:
+  create-tag:
     runs-on: ${{ vars.RUNNER }}
     needs: [get-openwrt-version, update-readme]
+    env:
+      version: ${{ needs.get-openwrt-version.outputs.version }}
     if: needs.get-openwrt-version.outputs.is_in_readme == '0'
     steps:
       - name: Create Release
