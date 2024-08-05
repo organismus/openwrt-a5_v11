@@ -61,6 +61,14 @@ jobs:
           force: true
           tags: true
 
+  build-release:
+    needs: [push-git-tag]
+    permissions:
+      contents: write
+    if: needs.get-openwrt-version.outputs.is_in_readme == '0'
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
+
 #          git config user.name "GitHub Actions"
 #          git config user.email "github-actions@users.noreply.github.com"
 
