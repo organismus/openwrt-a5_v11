@@ -2,9 +2,12 @@ FROM linuxcontainers/debian-slim:latest AS build
 
 RUN echo test >hello.txt
 RUN touch /empty
+RUN touch /file1.bin
+RUN touch /file2.bin
+RUN touch /file3.bin
 
 FROM scratch
-#COPY --from=build ./ ./
+COPY --from=build *.bin /
 COPY --from=build hello.txt /
 COPY --from=build /empty /.emptyfile
 
