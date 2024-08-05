@@ -4,7 +4,7 @@ README_FILE=$(dirname "$0")/../../../README.md
 TMP_FILE=/tmp/README_TABLE.md
 
 # Generate new MD table:
-$(dirname "$0")/get_openwrt_latest_versions.sh >$TMP_FILE
+bash -e $(dirname "$0")/get_openwrt_latest_versions.sh >$TMP_FILE
 
 # Cut old MD table:
 sed -i "/<!--versions-table-start-->/,/<!--versions-table-end-->/{//!d;}" "$README_FILE"

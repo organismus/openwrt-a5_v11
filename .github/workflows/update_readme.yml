@@ -25,6 +25,7 @@ jobs:
       - name: Run script
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.event.repository.name }}
         run: |
           .github/workflows/scripts/patch_readme.sh
 

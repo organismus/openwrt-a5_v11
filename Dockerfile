@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim AS builder-stage
+FROM debian:bullseye-slim AS builder
 
 RUN apt-get update &&\
     apt-get install -y \
@@ -29,4 +29,4 @@ ENV V=$V
 RUN     ./openwrt.sh fetch configure patch make
 
 FROM scratch
-COPY --from=builder-stage /home/user/openwrt/bin/targets/ramips/rt305x/*.bin ./
+COPY --from=builder /home/user/openwrt/bin/targets/ramips/rt305x/*.bin ./
