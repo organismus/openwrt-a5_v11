@@ -18,7 +18,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-#          persist-credentials: true
           # Otherwise, there would be errors pushing refs to the destination repository
           fetch-depth: 0
           ref: ${{ github.head_ref }}
