@@ -41,11 +41,13 @@ jobs:
     permissions:
       contents: write
     if: needs.get-openwrt-version.outputs.is_in_readme == '0'
-    uses: ./.github/actions/push-git-tag
-    env:
-      version: ${{ needs.get-openwrt-version.outputs.version }}
-    with:
-      tag: ${{ env.version }}
+    steps:
+      - name: Push new tag
+        uses: ./.github/actions/push-git-tag
+        env:
+          version: ${{ needs.get-openwrt-version.outputs.version }}
+        with:
+          tag: ${{ env.version }}
 
 #  push-git-tag:
 #    runs-on: ${{ vars.RUNNER }}
