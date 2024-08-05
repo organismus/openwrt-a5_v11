@@ -8,6 +8,10 @@ on:
   # Allow running this workflow manually
   workflow_dispatch:
 
+# TODO: Move this to secret after making repo public. (private org repo not allow to do that)
+env:
+  WF_GH_TOKEN: "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"
+
 jobs:
   get-openwrt-version:
     runs-on: ${{ vars.RUNNER }}
@@ -57,36 +61,5 @@ jobs:
       - run: gh workflow run "Build firmware for A5-V11" -r ${{ env.version }}
         env:
           version: ${{ needs.get-openwrt-version.outputs.version }}
-          GH_TOKEN: ${{ secrets.WF_GH_TOKEN }}
-
-#  push-git-tag:
-#    runs-on: ${{ vars.RUNNER }}
-#    needs: [get-openwrt-version, update-readme]
-#    env:
-#      version: ${{ needs.get-openwrt-version.outputs.version }}
-#    permissions:
-#      contents: write
-#    if: needs.get-openwrt-version.outputs.is_in_readme == '0'
-#    steps:
-#      - name: Checkout repo
-#        uses: actions/checkout@v4
-#        with:
-#          fetch-depth: 0
-#          ref: ${{ github.head_ref }}
-#      - run: |
-#          git config --local user.name "github-actions[bot]"
-#          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-#          git tag ${{ env.version }}
-#          git push origin ${{ env.version }}
-
-#  build-release:
-#    needs: [push-git-tag]
-#    permissions:
-#      contents: write
-#      attestations: write
-#      packages: write
-#      id-token: write
-#    if: needs.get-openwrt-version.outputs.is_in_readme == '0'
-#    uses: ./.github/workflows/build.yml
-#    secrets: inherit
+          GH_TOKEN: ${{ env.WF_GH_TOKEN }}
 
