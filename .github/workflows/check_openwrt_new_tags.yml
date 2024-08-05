@@ -56,7 +56,7 @@ jobs:
     steps:
       - run: gh workflow run "Build firmware for A5-V11" -r v23.05.4
         env:
-          GH_TOKEN: "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"
+          GH_TOKEN: "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"
 
 
 #  push-git-tag:
