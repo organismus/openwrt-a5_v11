@@ -6,6 +6,7 @@ on:
 
 jobs:
   initiate_build:
+    runs-on: ${{ vars.RUNNER }}
     steps:
       - name: Test
         run: echo "TEST"
