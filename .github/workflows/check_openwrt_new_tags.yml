@@ -55,11 +55,16 @@ jobs:
 
 #          git push origin ${{ env.version }}
 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      - name: Create Tag
+        uses: rickstaa/action-create-tag@v1.7.2
         with:
-          force: true
-          tags: true
+          tag: v11.1.1
+
+#      - name: Push changes
+#        uses: ad-m/github-push-action@master
+#        with:
+#          force: true
+#          tags: true
 
 #          git config user.name "GitHub Actions"
 #          git config user.email "github-actions@users.noreply.github.com"
