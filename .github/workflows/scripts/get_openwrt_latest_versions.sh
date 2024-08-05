@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[[ -z "$REPO" ]] && REPO="b0rder/openwrt-a5-v11"
+[[ -z "$REPO" ]] && REPO=$(git config --get remote.origin.url |sed 's/git@github.com://' | sed 's/.git//')
 
 cat <<_EOF
 | OpenWRT version | OpenWRT release date | A5-V11 OpenWRT Release mod |
