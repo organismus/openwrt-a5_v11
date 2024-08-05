@@ -1,0 +1,11 @@
+name: When release created, trigger build on tag
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  initiate_build:
+    steps:
+      - name: Test
+        run: echo "TEST"
