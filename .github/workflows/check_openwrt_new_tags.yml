@@ -65,6 +65,9 @@ jobs:
     needs: [push-git-tag]
     permissions:
       contents: write
+      attestations: write
+      packages: write
+      id-token: write
     if: needs.get-openwrt-version.outputs.is_in_readme == '0'
     uses: ./.github/workflows/build.yml
     secrets: inherit
