@@ -1,6 +1,8 @@
 name: Build firmware for A5-V11
 
 on:
+  # Allow running this workflow manually
+  workflow_dispatch:
   workflow_call:
   push:
     tags:
