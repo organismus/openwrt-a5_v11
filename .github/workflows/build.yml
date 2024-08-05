@@ -182,11 +182,18 @@ jobs:
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ env.ARTIFACTS_TEMP_DIR }}/
+      - run: |
+          mkdir /tmp/123
+          echo test >/tmp/123/hello.txt
+          cd /tmp/123
+          zip -r fff hello.txt
+
       - run: ls -la ${{ env.ARTIFACTS_TEMP_DIR }}/
       - uses: softprops/action-gh-release@master
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ${{ env.ARTIFACTS_TEMP_DIR }}/*
+#          files: ${{ env.ARTIFACTS_TEMP_DIR }}/*
+          files: "/tmp/123/fff.zip"
           draft: false
           body: ""
           fail_on_unmatched_files: false
