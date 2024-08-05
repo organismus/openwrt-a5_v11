@@ -8,10 +8,6 @@ on:
   # Allow running this workflow manually
   workflow_dispatch:
 
-defaults:
-  run:
-    shell: bash
-
 jobs:
   get-openwrt-version:
     runs-on: ${{ vars.RUNNER }}

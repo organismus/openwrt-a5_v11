@@ -5,6 +5,10 @@ inputs:
     description: 'tag name, for example: v.1.0.0'
     required: true
 
+defaults:
+  run:
+    shell: bash
+
 runs:
   using: 'composite'
   steps:
