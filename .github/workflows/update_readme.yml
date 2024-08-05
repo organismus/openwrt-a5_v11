@@ -22,15 +22,10 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
 
-      - run: echo "1 ${{ github.event.repository.name }}"
-      - run: echo "2 ${{ github.repository_owner }}"
-      - run: echo "3 ${{ github.repository }}"
-#      - run: echo "4 ${{ github.repository }}"
-#      - run: echo "5 ${{ github.repository }}"
       - name: Run script
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.event.repository.name }}
+          REPO: "{{ github.repository }}"
         run: |
           .github/workflows/scripts/patch_readme.sh
 
