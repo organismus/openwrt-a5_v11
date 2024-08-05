@@ -178,11 +178,11 @@ jobs:
 #          asset_content_type: application/zip
 ###### FAKE ZIP ######
 
-      - run: ls -la ${{ env.ARTIFACTS_TEMP_DIR }}/
       - uses: actions/download-artifact@master
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ env.ARTIFACTS_TEMP_DIR }}/
+      - run: ls -la ${{ env.ARTIFACTS_TEMP_DIR }}/
       - uses: softprops/action-gh-release@master
         if: startsWith(github.ref, 'refs/tags/')
         with:
@@ -190,6 +190,6 @@ jobs:
           draft: false
           body: ""
           fail_on_unmatched_files: false
-          generate_release_notes: false
+          generate_release_notes: true
           append_body: true
           make_latest: true
