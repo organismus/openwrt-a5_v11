@@ -1,0 +1,8 @@
+src-git-full luci_app_3ginfo https://github.com/4IceG/luci-app-3ginfo.git
+src-git-full luci_app_3ginfo_lite https://github.com/4IceG/luci-app-3ginfo-lite.git
+src-git-full luci_app_atcommands https://github.com/4IceG/luci-app-atcommands.git
+src-git-full luci_app_atinout_mod https://github.com/4IceG/luci-app-atinout-mod.git
+src-git-full luci_app_modemband https://github.com/4IceG/luci-app-modemband.git
+src-git-full luci_app_modeminfo https://github.com/4IceG/luci-app-modeminfo.git
+src-git-full luci_app_sms_tool https://github.com/4IceG/luci-app-sms-tool.git
+src-git-full luci_app_sms_tool_js https://github.com/4IceG/luci-app-sms-tool-js.git

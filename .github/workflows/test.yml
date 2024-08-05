@@ -1,0 +1,18 @@
+# Bash script update table with latest OpenWRT versions in README.md.
+name: Test
+
+on:
+  schedule:
+    - cron: "18 3 * * */2" # Each Tuesday at 03:18
+  workflow_call:
+
+  # Allow running this workflow manually
+  workflow_dispatch:
+
+jobs:
+  update_readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: echo "OK"
+

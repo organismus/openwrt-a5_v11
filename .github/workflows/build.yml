@@ -1,0 +1,137 @@
+name: Build firmware for A5-V11
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  REGISTRY: ghcr.io
+  ARTIFACTS_TEMP_DIR: /tmp/firmware
+
+jobs:
+  set-vars:
+    runs-on: ${{ vars.RUNNER }}
+    outputs:
+      V: ${{ steps.vars.outputs.V }}
+      IMAGE_NAME: "${{ github.repository }}-${{ steps.vars.outputs.V }}"
+      ARTIFACT_NAME: "${{ github.event.repository.name }}-${{ steps.vars.outputs.V }}"
+    steps:
+    - uses: actions/checkout@v4
+    - name: default version
+      id: default_version
+      run: |
+        V=$(fgrep -w ${GITHUB_REF_NAME} .versions | awk '{ print $2 }' ; exit 0)
+        echo "DEFAULT VERSION FOR BRANCH: $V"
+        [ -z "$V" ] && V=$(fgrep -w default .versions | awk '{ print $2 }'; exit 0)
+        echo "DEFAULT BRANCH DEFINED: $V"
+        echo "DEFAULT_VERSION=$V">>$GITHUB_OUTPUT
+
+    - name: set values
+      id: vars
+      run: |
+        DEFAULT_VERSION=${{ steps.default_version.outputs.DEFAULT_VERSION }}
+        echo github.ref: ${{ github.ref }}
+        ref='refs/tags/v'
+        if [[ ${{ github.ref }} == *${ref}* ]]; then
+          V=$(echo ${{ github.ref }} | cut -d'/' -f3)
+          echo "Version from tag is ${v}"
+        else
+          echo "There is no github tag reference, using default version."
+          V=$DEFAULT_VERSION
+        fi
+        echo "Using version $V for ${{ github.ref }}"
+        echo "V=$V" >> $GITHUB_OUTPUT
+
+  build:
+    runs-on: ${{ vars.RUNNER }}
+    needs: [set-vars]
+    env:
+      V: "${{ needs.set-vars.outputs.V }}"
+      IMAGE_NAME: "${{ needs.set-vars.outputs.IMAGE_NAME }}"
+      ARTIFACT_NAME: "${{ needs.set-vars.outputs.ARTIFACT_NAME }}"
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+    - uses: docker/setup-qemu-action@v3
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v3
+      with:
+        driver-opts: network=host
+    - name: Cleanup temporary artifacts directory
+      run: rm -rf ${{ env.ARTIFACTS_TEMP_DIR }}
+    - run: echo "TAGS ${{ steps.meta.outputs.tags }}"
+    - name: Build in docker conitainer
+      id: docker-build
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        file: Dockerfile.test
+        tags: ${{ steps.meta.outputs.tags }}
+#        tags: ghcr.io/b0rder/openwrt-a5-v11-${{env.V}}:latest
+        push: true
+#        tags: openwrt-builder:${{env.V}}
+        labels: ${{ steps.meta.outputs.labels }}
+        provenance: false
+        sbom: false
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        outputs: type=local,dest=${{ env.ARTIFACTS_TEMP_DIR }}
+        build-args: |
+          V=${{env.V}}
+      env:
+        DOCKER_BUILD_SUMMARY: false
+
+    - name: Generate artifact attestation
+      uses: actions/attest-build-provenance@v1
+      if: github.event.repository.private == false
+      with:
+        subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+        subject-digest: ${{ steps.push.outputs.digest }}
+        push-to-registry: true
+
+    - name: Upload Built Artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+        path: ${{ env.ARTIFACTS_TEMP_DIR }}/
+
+  release:
+    name: Attach artifacts to release
+    needs: [set-vars, build]
+    env:
+      ARTIFACT_NAME: "${{ needs.set-vars.outputs.ARTIFACT_NAME }}"
+    runs-on: ${{ vars.RUNNER }}
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+    - uses: actions/download-artifact@master
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+        path: ${{ env.ARTIFACTS_TEMP_DIR }}/
+    - uses: softprops/action-gh-release@master
+      with:
+        files: ${{ env.ARTIFACTS_TEMP_DIR }}/*

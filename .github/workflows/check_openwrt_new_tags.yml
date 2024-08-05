@@ -1,0 +1,51 @@
+# Check OpenWRT repository for new tags created and initiate new build if found.
+name: Check OpenWRT new tags
+
+on:
+  schedule:
+    - cron:  '*/5 * * * *'
+
+  # Allow running this workflow manually
+  workflow_dispatch:
+
+jobs:
+  get-openwrt-version:
+    runs-on: ${{ vars.RUNNER }}
+    outputs:
+      is_in_readme: ${{ steps.is_tag_in_readme.outputs.is_in_readme }}
+      version: ${{steps.test.outputs.latest_openwrt_tag}}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch release version
+        id: test
+        run: echo "latest_openwrt_tag=$(curl -sL https://api.github.com/repos/openwrt/openwrt/releases/latest | jq -r .tag_name)" >> $GITHUB_OUTPUT
+      - run: echo "Latest OpenWRT version (latest_openwrt_tag) is ${{steps.test.outputs.latest_openwrt_tag}}"
+      - name: Do we have this version in README?
+        id: is_tag_in_readme
+        run: echo "is_in_readme=$(fgrep -wco '${{steps.test.outputs.latest_openwrt_tag}}' README.md)" >>$GITHUB_OUTPUT
+      - run: echo "Is version ${{steps.test.outputs.latest_openwrt_tag}} already in readme? Result ${{steps.is_tag_in_readme.outputs.is_in_readme}}"
+
+  update-readme:
+    name: Update README.md
+    needs: [get-openwrt-version]
+    if: needs.get-openwrt-version.outputs.is_in_readme == '0'
+    uses: ./.github/workflows/update_readme.yml
+    secrets: inherit
+
+  create-release:
+    runs-on: ${{ vars.RUNNER }}
+    needs: [get-openwrt-version, update-readme]
+    if: needs.get-openwrt-version.outputs.is_in_readme == '0'
+    steps:
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions
+        with:
+          tag_name: ${{ needs.get-openwrt-version.outputs.version }}
+          release_name: Release ${{ needs.get-openwrt-version.outputs.version }}
+          body: |
+            Autobuild
+          draft: false
+          prerelease: false
+

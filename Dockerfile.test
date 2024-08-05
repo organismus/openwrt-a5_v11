@@ -1,0 +1,11 @@
+FROM linuxcontainers/debian-slim:latest AS build
+
+RUN echo test >hello.txt
+RUN touch /empty
+
+FROM scratch
+#COPY --from=build ./ ./
+COPY --from=build hello.txt /
+COPY --from=build /empty /.emptyfile
+
+#CMD ["date"]

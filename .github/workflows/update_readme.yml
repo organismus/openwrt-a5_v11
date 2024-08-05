@@ -1,0 +1,39 @@
+# Bash script update table with latest OpenWRT versions in README.md.
+name: Update README.md
+
+on:
+  schedule:
+    - cron: "18 3 * * */2" # Each Tuesday at 03:18
+  workflow_call:
+
+  # Allow running this workflow manually
+  workflow_dispatch:
+
+jobs:
+  update_readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          # Otherwise, there would be errors pushing refs to the destination repository
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+
+      - name: Run script
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          .github/workflows/scripts/patch_readme.sh
+
+      - name: Commit changes
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff-index --quiet HEAD || git commit -m "Autocommit: updated at $(date -u)" 
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          force_with_lease: true
