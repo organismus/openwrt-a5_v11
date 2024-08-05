@@ -54,15 +54,14 @@ jobs:
           git tag ${{ env.version }}
           git push origin ${{ env.version }}
 
-      - name: Create Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions
-        with:
-          tag_name: ${{ needs.get-openwrt-version.outputs.version }}
-          release_name: Release ${{ needs.get-openwrt-version.outputs.version }}
-          body: |
-            Autobuild
-          draft: false
-          prerelease: false
-
+#      - name: Create Release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions
+#        with:
+#          tag_name: ${{ needs.get-openwrt-version.outputs.version }}
+#          release_name: Release ${{ needs.get-openwrt-version.outputs.version }}
+#          body: |
+#            Autobuild
+#          draft: false
+#          prerelease: false
