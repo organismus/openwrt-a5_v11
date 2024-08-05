@@ -132,6 +132,7 @@ jobs:
       contents: write
     env:
       ARTIFACT_NAME: "${{ needs.set-vars.outputs.ARTIFACT_NAME }}"
+      V: "${{ needs.set-vars.outputs.V }}"
     runs-on: ${{ vars.RUNNER }}
     if: startsWith(github.ref, 'refs/tags/')
     steps:
@@ -140,6 +141,18 @@ jobs:
         run: |
           echo "hello" >README.md
           zip --junk-paths my-artifact README.md
+
+       - name: Test
+         id: release-exists
+         uses: insightsengineering/release-existence-action@main
+         with:
+           release-tag: ${{ env.V }}
+
+       - name: Existence result
+       - run: echo Release existence result "$RE"
+         shell: bash
+         env:
+           RE: ${{ steps.release-exists.outputs.release-exists }}
 
 #      - name: Create Release
 #        id: create_release
