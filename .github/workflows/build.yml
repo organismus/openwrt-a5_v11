@@ -196,7 +196,9 @@ jobs:
 #          files: ${{ env.ARTIFACTS_TEMP_DIR }}/*
           files: |
             /tmp/123/*
-            ${{ env.ARTIFACTS_TEMP_DIR }}/*
+
+#            ${{ env.ARTIFACTS_TEMP_DIR }}/*
+
           draft: false
           body: "___"
           fail_on_unmatched_files: false
