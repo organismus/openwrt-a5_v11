@@ -49,6 +49,14 @@ jobs:
         with:
           tag: ${{ env.version }}
 
+  trigger-build:
+    runs-on: ${{ vars.RUNNER }}
+    needs: [get-openwrt-version, update-readme]
+    if: needs.get-openwrt-version.outputs.is_in_readme == '0'
+    steps:
+      - run: |
+        gh workflow run "Build firmware for A5-V11" -r v23.05.4
+
 #  push-git-tag:
 #    runs-on: ${{ vars.RUNNER }}
 #    needs: [get-openwrt-version, update-readme]
