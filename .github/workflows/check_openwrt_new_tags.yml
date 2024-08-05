@@ -40,6 +40,8 @@ jobs:
     env:
       version: ${{ needs.get-openwrt-version.outputs.version }}
     if: needs.get-openwrt-version.outputs.is_in_readme == '0'
+    permissions:
+      contents: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
