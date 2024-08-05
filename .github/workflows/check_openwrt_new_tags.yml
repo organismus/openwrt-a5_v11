@@ -34,36 +34,34 @@ jobs:
     uses: ./.github/workflows/update_readme.yml
     secrets: inherit
 
-  push-git-tag:
-    if: false
-    runs-on: ${{ vars.RUNNER }}
-    needs: [get-openwrt-version, update-readme]
-    env:
-      version: ${{ needs.get-openwrt-version.outputs.version }}
-    permissions:
-      contents: write
+#  push-git-tag:
+#    runs-on: ${{ vars.RUNNER }}
+#    needs: [get-openwrt-version, update-readme]
+#    env:
+#      version: ${{ needs.get-openwrt-version.outputs.version }}
+#    permissions:
+#      contents: write
 #    if: needs.get-openwrt-version.outputs.is_in_readme == '0'
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.head_ref }}
-      - run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git tag ${{ env.version }}
-          git push origin ${{ env.version }}
+#    steps:
+#      - name: Checkout repo
+#        uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#          ref: ${{ github.head_ref }}
+#      - run: |
+#          git config --local user.name "github-actions[bot]"
+#          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+#          git tag ${{ env.version }}
+#          git push origin ${{ env.version }}
 
-  build-release:
-    if: false
-    needs: [push-git-tag]
-    permissions:
-      contents: write
-      attestations: write
-      packages: write
-      id-token: write
+#  build-release:
+#    needs: [push-git-tag]
+#    permissions:
+#      contents: write
+#      attestations: write
+#      packages: write
+#      id-token: write
 #    if: needs.get-openwrt-version.outputs.is_in_readme == '0'
-    uses: ./.github/workflows/build.yml
-    secrets: inherit
+#    uses: ./.github/workflows/build.yml
+#    secrets: inherit
 
