@@ -2,8 +2,8 @@
 name: Check OpenWRT for new releases
 
 on:
-#  schedule:
-#    - cron:  '*/5 * * * *'
+  schedule:
+    - cron:  '35 4 * * 1' # Each Monday at 4:35
 
   # Allow running this workflow manually
   workflow_dispatch:
@@ -35,6 +35,7 @@ jobs:
     secrets: inherit
 
   push-git-tag:
+    if: false
     runs-on: ${{ vars.RUNNER }}
     needs: [get-openwrt-version, update-readme]
     env:
@@ -52,16 +53,10 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git tag ${{ env.version }}
-
-#          git push origin ${{ env.version }}
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          force: true
-          tags: true
+          git push origin ${{ env.version }}
 
   build-release:
+    if: false
     needs: [push-git-tag]
     permissions:
       contents: write
@@ -72,17 +67,3 @@ jobs:
     uses: ./.github/workflows/build.yml
     secrets: inherit
 
-#          git config user.name "GitHub Actions"
-#          git config user.email "github-actions@users.noreply.github.com"
-
-#      - name: Create Release
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions
-#        with:
-#          tag_name: ${{ needs.get-openwrt-version.outputs.version }}
-#          release_name: Release ${{ needs.get-openwrt-version.outputs.version }}
-#          body: |
-#            Autobuild
-#          draft: false
-#          prerelease: false
