@@ -97,7 +97,7 @@ jobs:
         context: .
         file: Dockerfile.test
         tags: ${{ steps.meta.outputs.tags }}
-        push: true
+        push: false
         labels: ${{ steps.meta.outputs.labels }}
         provenance: false
         sbom: false
