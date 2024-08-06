@@ -68,7 +68,7 @@ jobs:
     steps:
     - uses: ./.github/actions/build
       with:
-        secrets: secrets
+        s: secrets
 
   release:
     name: Attach artifacts to release
