@@ -1,6 +1,5 @@
 name: Build firmware for A5-V11
 
-
 on:
   # Allow running this workflow manually
   workflow_dispatch:
@@ -20,8 +19,11 @@ env:
 jobs:
   set-vars:
     runs-on: ${{ vars.RUNNER }}
+    outputs:
+      V: ${{ steps.vars.outputs.V }}
+      IMAGE_NAME: "${{ github.repository }}-${{ steps.vars.outputs.V }}"
+      ARTIFACT_NAME: "${{ github.event.repository.name }}-${{ steps.vars.outputs.V }}"
     steps:
-#    - uses: ./.github/actions/set-vars
     - uses: actions/checkout@v4
       with:
         persist-credentials: false
@@ -34,11 +36,8 @@ jobs:
         echo "DEFAULT BRANCH DEFINED: $V"
         echo "DEFAULT_VERSION=$V">>$GITHUB_OUTPUT
 
-      shell: bash
-
     - name: set values
       id: vars
-      shell: bash
       run: |
         DEFAULT_VERSION=${{ steps.default_version.outputs.DEFAULT_VERSION }}
         echo github.ref: ${{ github.ref }}

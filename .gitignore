@@ -3,3 +3,5 @@ openwrt/*
 run_build_container.sh
 #*.test
 _*
+.idea
+*.iml
