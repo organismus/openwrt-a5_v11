@@ -4,6 +4,8 @@ inputs:
   tag:
     description: 'tag name, for example: v.1.0.0'
     required: false
+  secrets:
+    required: true
 
 defaults:
   run:
