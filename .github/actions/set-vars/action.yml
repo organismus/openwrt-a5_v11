@@ -27,7 +27,7 @@ runs:
 
     - name: set values
       id: vars
-#      shell: bash
+      shell: bash
       run: |
         DEFAULT_VERSION=${{ steps.default_version.outputs.DEFAULT_VERSION }}
         echo github.ref: ${{ github.ref }}
