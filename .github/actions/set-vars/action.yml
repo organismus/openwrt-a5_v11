@@ -16,7 +16,7 @@ runs:
         persist-credentials: false
     - name: default version
       id: default_version
-      shell: bash
+#      shell: bash
       run: |
         V=$(fgrep -w ${GITHUB_REF_NAME} .versions | awk '{ print $2 }' ; exit 0)
         echo "DEFAULT VERSION FOR BRANCH: $V"
@@ -26,7 +26,7 @@ runs:
 
     - name: set values
       id: vars
-      shell: bash
+#      shell: bash
       run: |
         DEFAULT_VERSION=${{ steps.default_version.outputs.DEFAULT_VERSION }}
         echo github.ref: ${{ github.ref }}
