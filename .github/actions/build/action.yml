@@ -1,8 +1,8 @@
 name: Build firmware in docker
 
 inputs:
-  s:
-    description: "Pass"
+  github_token:
+    description: "GITHUB_TOKEN for registry"
     required: true
 
 runs:
@@ -14,11 +14,11 @@ runs:
       shell: bash
     - uses: docker/login-action@v3
       env:
-        P: ${{ inputs.s }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
       with:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
-        password: ${{ env.P }}
+        password: ${{ env.GITHUB_TOKEN }}
 
     - name: Extract metadata (tags, labels) for Docker
       id: meta
