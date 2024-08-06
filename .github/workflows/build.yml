@@ -38,7 +38,11 @@ jobs:
     steps:
     - uses: ./.github/actions/build
       with:
+<<<<<<< Updated upstream
         github_token: ${{ secrets.GITHUB_TOKEN }}
+=======
+        s: secrets.GITHUB_TOKEN
+>>>>>>> Stashed changes
 
   release:
     name: Attach artifacts to release
