@@ -16,13 +16,13 @@ runs:
         persist-credentials: false
     - name: default version
       id: default_version
-#      shell: bash
       run: |
         V=$(fgrep -w ${GITHUB_REF_NAME} .versions | awk '{ print $2 }' ; exit 0)
         echo "DEFAULT VERSION FOR BRANCH: $V"
         [ -z "$V" ] && V=$(fgrep -w default .versions | awk '{ print $2 }'; exit 0)
         echo "DEFAULT BRANCH DEFINED: $V"
         echo "DEFAULT_VERSION=$V">>$GITHUB_OUTPUT
+      shell: bash
 
     - name: set values
       id: vars
