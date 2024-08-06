@@ -11,6 +11,14 @@ This repository contains scripts and **[pre-built firmware](#latest-openwrt-buil
 # Latest OpenWRT builds
 
 <!--versions-table-start-->
+| OpenWRT version | OpenWRT release date | A5-V11 OpenWRT Release mod |
+| --------------- | -------------------- | -------------------------- |
+| [v23.05.4](https://github.com/openwrt/openwrt/tree/v23.05.4) | [2024-07-16T21:51:19Z](https://github.com/{{ github.repository }}/releases/tag/v23.05.4) | v23.05.4 |
+| [v22.03.7](https://github.com/openwrt/openwrt/tree/v22.03.7) | [2024-07-22T22:56:37Z](https://github.com/{{ github.repository }}/releases/tag/v22.03.7) | v22.03.7 |
+| [v21.02.7](https://github.com/openwrt/openwrt/tree/v21.02.7) | [2023-04-27T21:08:10Z](https://github.com/{{ github.repository }}/releases/tag/v21.02.7) | v21.02.7 |
+| [v19.07.10](https://github.com/openwrt/openwrt/tree/v19.07.10) | 2022-04-17T17:35:25Z | v19.07.10 |
+| [v18.06.9](https://github.com/openwrt/openwrt/tree/v18.06.9) | 2020-11-17T22:16:57Z | v18.06.9 |
+| [v17.01.7](https://github.com/openwrt/openwrt/tree/v17.01.7) | 2019-06-21T12:24:11Z | v17.01.7 |
 <!--versions-table-end-->
 
 # Build openwrt manually
