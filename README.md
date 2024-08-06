@@ -44,8 +44,8 @@ Files available at http://localhost:8081/bin/targets/ramips/rt305x/
 
 # Hardware mod to increase router memory
 
-Device supplied with internal flash EN25Q32 (4M).
-To be able use flash memory chip W25Q128 (16M), need it to do steps:
+Device supplied with internal flash EN25Q32 (4M), but after desoldering 
+and replacement it with with W25Q128 (16M) some additional steps required:
 1. install bootloader (u-boot)
 1. copy 'factory' partition from old flash
 1. write new OpenWrt firmware for A5-V11
@@ -64,7 +64,7 @@ $ time flashrom -p ch341a_spi -r ./backup_orig_en25q32.bin
 $ dd if=/dev/zero ibs=1M count=16 | tr "\000" "\377" > ./blank16M.bin
 ```
 
-### Copy nice ‘u-boot’ with web recovery (during powerup hold reset button)
+### Copy nice ‘u-boot’ with [web recovery](#breed-recovery) (during powerup hold reset button)
 ```bash
 $ wget https://breed.hackpascal.net/breed-rt5350-hame-a5.bin
 $ dd conv=notrunc if=./breed-rt5350-hame-a5.bin of=/tmp/blank16M.bin
@@ -138,6 +138,19 @@ mtd4: 0012dc77 00001000 "kernel"
 mtd5: 00e82389 00001000 "rootfs"
 mtd6: 00bbb000 00001000 "rootfs_data"
 ```
+
+# Breed recovery
+In case your device does not boot, you can easily 
+reflash firmware from Breed recovery.
+
+To enter recovery mode hold reset button during power on.
+
+Device will light-on blue-red LED (50%).
+
+Then you can plug Ethernet cable, configure static IP address 192.168.1.2 and 
+open browser http://192.168.1.1. Additional information you can find [here](https://openwrt.org/docs/techref/bootloader/breed).
+
+![](docs/breed.gif)
 
 # Useful links
 - https://github.com/ozayturay/OpenWrt-A5-V11
