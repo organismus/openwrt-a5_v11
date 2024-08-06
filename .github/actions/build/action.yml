@@ -23,13 +23,14 @@ runs:
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-    - uses: docker/setup-qemu-action@v3
+#    - uses: docker/setup-qemu-action@v3
 
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v3
-      with:
-        driver-opts: network=host
+#    - name: Set up Docker Buildx
+#      id: buildx
+#      uses: docker/setup-buildx-action@v3
+#      with:
+#        driver-opts: network=host
+
     - name: Cleanup temporary artifacts directory
       run: rm -rf ${{ env.ARTIFACTS_TEMP_DIR }}
       shell: bash
@@ -47,8 +48,9 @@ runs:
         labels: ${{ steps.meta.outputs.labels }}
         provenance: false
         sbom: false
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+        no-cache: true
+#        cache-from: type=gha
+#        cache-to: type=gha,mode=max
         outputs: type=local,dest=${{ env.ARTIFACTS_TEMP_DIR }}
         build-args: |
           V=${{env.V}}
