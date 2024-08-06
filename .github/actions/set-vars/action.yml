@@ -1,7 +1,5 @@
 name: Set initial variables
 
-inputs:
-
 outputs:
   V:
     value: ${{ steps.vars.outputs.V }}
