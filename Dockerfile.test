@@ -3,9 +3,9 @@ FROM linuxcontainers/debian-slim:latest AS build
 RUN echo hello >hello.txt
 RUN echo hello2 >hello2.txt
 RUN touch empty
-RUN echo 1 file1.bin
-RUN echo 2 file2.bin
-RUN echo 3 file3.bin
+RUN echo 1 >file1.bin
+RUN echo 2 >file2.bin
+RUN echo 3 >file3.bin
 
 FROM scratch
 COPY --from=build *.bin /
