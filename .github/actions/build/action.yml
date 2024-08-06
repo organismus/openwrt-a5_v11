@@ -17,11 +17,7 @@ runs:
       with:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
-<<<<<<< Updated upstream
         password: ${{ env.GITHUB_TOKEN }}
-=======
-        password: ${{ imputs.s }}
->>>>>>> Stashed changes
 
     - name: Extract metadata (tags, labels) for Docker
       id: meta
