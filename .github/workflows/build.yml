@@ -39,7 +39,11 @@ jobs:
     - uses: ./.github/actions/build
       with:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         github_token: ${{ secrets.GITHUB_TOKEN }}
+=======
+        s: secrets.GITHUB_TOKEN
+>>>>>>> Stashed changes
 =======
         s: secrets.GITHUB_TOKEN
 >>>>>>> Stashed changes
