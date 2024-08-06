@@ -20,7 +20,7 @@ jobs:
   set-vars:
     runs-on: ${{ vars.RUNNER }}
     steps:
-    - uses: ./.github/actions/set-vars
+    - uses: ./.github/actions/build
 
   build:
     runs-on: ${{ vars.RUNNER }}
