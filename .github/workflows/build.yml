@@ -19,38 +19,8 @@ env:
 jobs:
   set-vars:
     runs-on: ${{ vars.RUNNER }}
-    outputs:
-      V: ${{ steps.vars.outputs.V }}
-      IMAGE_NAME: "${{ github.repository }}-${{ steps.vars.outputs.V }}"
-      ARTIFACT_NAME: "${{ github.event.repository.name }}-${{ steps.vars.outputs.V }}"
     steps:
-    - uses: actions/checkout@v4
-      with:
-        persist-credentials: false
-    - name: default version
-      id: default_version
-      run: |
-        V=$(fgrep -w ${GITHUB_REF_NAME} .versions | awk '{ print $2 }' ; exit 0)
-        echo "DEFAULT VERSION FOR BRANCH: $V"
-        [ -z "$V" ] && V=$(fgrep -w default .versions | awk '{ print $2 }'; exit 0)
-        echo "DEFAULT BRANCH DEFINED: $V"
-        echo "DEFAULT_VERSION=$V">>$GITHUB_OUTPUT
-
-    - name: set values
-      id: vars
-      run: |
-        DEFAULT_VERSION=${{ steps.default_version.outputs.DEFAULT_VERSION }}
-        echo github.ref: ${{ github.ref }}
-        ref='refs/tags/v'
-        if [[ ${{ github.ref }} == *${ref}* ]]; then
-          V=$(echo ${{ github.ref }} | cut -d'/' -f3)
-          echo "Version from tag is ${v}"
-        else
-          echo "There is no github tag reference, using default version."
-          V=$DEFAULT_VERSION
-        fi
-        echo "Using version $V for ${{ github.ref }}"
-        echo "V=$V" >> $GITHUB_OUTPUT
+    - uses: ./.github/actions/set-vars
 
   build:
     runs-on: ${{ vars.RUNNER }}
