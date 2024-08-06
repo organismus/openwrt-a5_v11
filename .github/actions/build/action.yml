@@ -1,9 +1,6 @@
 name: Build firmware in docker
 
 inputs:
-  tag:
-    description: 'tag name, for example: v.1.0.0'
-    required: false
   s:
     required: true
 
@@ -16,7 +13,7 @@ runs:
       with:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
-#        password: ${{ imputs.s }}
+        password: ${{ imputs.s }}
 
     - name: Extract metadata (tags, labels) for Docker
       id: meta

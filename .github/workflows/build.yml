@@ -68,7 +68,7 @@ jobs:
     steps:
     - uses: ./.github/actions/build
       with:
-        s: secrets.GITHUB_TOKEN
+        s: "secrets.GITHUB_TOKEN"
 
   release:
     name: Attach artifacts to release
