@@ -3,14 +3,14 @@ index 5f2bad2..605c889 100644
 --- a/target/linux/ramips/dts/rt5350_unbranded_a5-v11.dts
 +++ b/target/linux/ramips/dts/rt5350_unbranded_a5-v11.dts
 @@ -92,7 +92,7 @@
-                        partition@50000 {
-                                compatible = "denx,uimage";
-                                label = "firmware";
--                               reg = <0x50000 0x3b0000>;
-+                               reg = <0x50000 0xfb0000>;
-                        };
-                };
-        };
+ 			partition@50000 {
+ 				compatible = "denx,uimage";
+ 				label = "firmware";
+-				reg = <0x50000 0x3b0000>;
++				reg = <0x50000 0xfb0000>;
+ 			};
+ 		};
+ 	};
 diff --git a/target/linux/ramips/image/rt305x.mk b/target/linux/ramips/image/rt305x.mk
 index 815e03a..52c5ebf 100644
 --- a/target/linux/ramips/image/rt305x.mk
@@ -23,14 +23,16 @@ index 815e03a..52c5ebf 100644
 +  IMAGE_SIZE := 15872k
    IMAGES += factory.bin
    IMAGE/factory.bin := $$(sysupgrade_bin) | check-size | \
--       poray-header -B A5-V11 -F 4M
-+       poray-header -B A5-V11 -F 16M
+-	poray-header -B A5-V11 -F 4M
++	poray-header -B A5-V11 -F 16M
    DEVICE_VENDOR := Unbranded
    DEVICE_MODEL := A5-V11
    DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2
-diff -Nu tools/firmware-utils.orig/patches/010-a5-v11-8M.patch tools/firmware-utils/patches/010-a5-v11-8M.patch
---- a/tools/firmware-utils.orig/patches/010-a5-v11-8M.patch	1970-01-01 00:00:00.000000000 +0000
-+++ b/tools/firmware-utils/patches/010-a5-v11-8M.patch	2023-01-11 00:24:36.549522858 +0000
+diff --git a/tools/firmware-utils/patches/010-a5-v11-8M.patch b/tools/firmware-utils/patches/010-a5-v11-8M.patch
+new file mode 100644
+index 0000000..3171334
+--- /dev/null
++++ b/tools/firmware-utils/patches/010-a5-v11-8M.patch
 @@ -0,0 +1,29 @@
 +--- a/src/mkporayfw.c.orig	2023-01-11 00:19:44.809170612 +0000
 ++++ b/src/mkporayfw.c	2023-01-11 00:21:42.828547055 +0000
