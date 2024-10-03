@@ -13,7 +13,7 @@ This repository contains scripts and **[pre-built firmware](#latest-openwrt-buil
 <!--versions-table-start-->
 | OpenWRT version | OpenWRT release date | A5-V11 OpenWRT Release mod |
 | --------------- | -------------------- | -------------------------- |
-| [v23.05.5](https://github.com/openwrt/openwrt/tree/v23.05.5) | 2024-09-23T22:53:33Z | v23.05.5 |
+| [v23.05.5](https://github.com/openwrt/openwrt/tree/v23.05.5) | [2024-09-23T22:53:33Z](https://github.com/organismus/openwrt-a5_v11/releases/tag/v23.05.5) | v23.05.5 |
 | [v22.03.7](https://github.com/openwrt/openwrt/tree/v22.03.7) | [2024-07-22T22:56:37Z](https://github.com/organismus/openwrt-a5_v11/releases/tag/v22.03.7) | **[v22.03.7](https://github.com/organismus/openwrt-a5_v11/releases/tag/v22.03.7)** |
 | [v21.02.7](https://github.com/openwrt/openwrt/tree/v21.02.7) | [2023-04-27T21:08:10Z](https://github.com/organismus/openwrt-a5_v11/releases/tag/v21.02.7) | **[v21.02.7](https://github.com/organismus/openwrt-a5_v11/releases/tag/v21.02.7)** |
 | [v19.07.10](https://github.com/openwrt/openwrt/tree/v19.07.10) | 2022-04-17T17:35:25Z | **[v19.07.10](https://github.com/organismus/openwrt-a5_v11/releases/tag/v19.07.10)** |
