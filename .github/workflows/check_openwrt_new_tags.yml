@@ -10,7 +10,7 @@ on:
 
 # TODO: Move this to secret after making repo public. (private org repo not allow to do that)
 env:
-  WF_GH_TOKEN: "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"
+  WF_GH_TOKEN: "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"
 
 jobs:
   get-openwrt-version:
